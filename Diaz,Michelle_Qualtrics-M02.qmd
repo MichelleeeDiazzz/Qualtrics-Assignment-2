@@ -1,0 +1,77 @@
+---
+title: "Qualtrics Assignment 2"
+subtitle: "Social Media Opinion Leader, Experimental Design"
+author: "Michelle Diaz"
+date: today
+format: 
+  html: 
+    toc: true
+    toc-depth: 4
+    number-sections: true
+    code-link: true
+    embed-resources: true
+    theme: cosmo
+editor: visual
+execute: 
+  freeze: auto
+---
+
+## Overview
+
+This document reports on the work completed for Qualtrics Assignment #2, building an experimental design into the Social Media Opinion Leader survey. The survey now randomly assigns participants to one of two ad types (social media review or ads) using the Randomizer and Branch functions in Survey Flow, improves Q2.2 so that social media usage is captured separately by platform instead of as a single combined estimate, and adds three additional improvements to the questionnaire.
+
+## Random Assignment: Survey Flow
+
+To scientifically compare the two ad types, participants needed to be randomly and evenly split into two groups, with each participant seeing only one ad type (a between-subjects design). This was built using a Randomizer placed immediately after the embedded "id" data element, with two branches inside it setting an embedded data field, Ad Type, to either "reviewer" or "ads." Further down the flow, two Branch elements use that Ad Type value to route participants to the correct block, Show Block: social_media_review for one group and Show Block: ads for the other. Both groups then continue on to the same DV (dependent variables) block, so everyone answers the same follow-up questions regardless of which ad they saw.
+
+The screenshots below show the full survey flow, from the Randomizer through the Branch routing.
+
+![Survey Flow, part 1: Randomizer and Ad Type assignment](images/survey-flow-1.png)
+
+![Survey Flow, part 1: Randomizer and Ad Type assignment](survey_flow_1.png)
+
+![Survey Flow, part 2: Branch routing to social_media_review and ads blocks](survey_flow_2.png)
+
+I tested this by running the survey in Preview mode multiple times to confirm that each run showed only one of the two ad blocks, never both and never neither, and that both ad types appeared across repeated runs.
+
+## Improvement of Q2.2: Platform-Specific Usage
+
+The original Q2.2 asked how much time participants spend on social media overall, combining all platforms into a single estimate. This made it impossible to tell how much time was spent on any individual platform, which limits the usefulness of the data for anyone using multiple platforms.
+
+To fix this, I used the Carry Forward method. First, I added a new multiple-answer question asking participants to select every social media platform they currently use. Then, I built a matrix question using Carry Forward Statements (All choices) pulling from that new question, so each participant's matrix is automatically populated with only the platforms they selected. The matrix uses the same five-point time scale as the original Q2.2, applied separately to each platform.
+
+![New multi-select question capturing which social media platforms participants use](Socail_Media_Usage.png)
+
+![Carry Forward matrix capturing time spent per platform selected](Carry_Forward.png)
+
+This approach is more elegant than combining Piped Text with Display Logic across a series of separate questions, since Carry Forward builds the per-platform breakdown automatically from a single source question, without needing a separate display-logic condition for every platform.
+
+## Three Additional Improvements
+
+### 1. Purchase price questions tied to ad exposure
+
+The original Purchasing Behavior block captured general advertising recall and social media recommendation behavior, but nothing tied directly back to the specific ad a participant had just seen. I added two new questions at the end of that block: a five-point scale asking whether seeing a listed price online influences likelihood to purchase, and an open numeric question (with numeric content validation) asking the maximum price a participant would be willing to pay based on the ad they just viewed. Together, these connect price sensitivity directly to the experimental ad exposure, which the original questionnaire did not capture at all.
+
+![Listed price influence question](Maximum-Price.png)
+
+![Listed price influence question & New purchase price questions in the Purchasing Behavior block](images/listed-price-influence-change.png)
+
+![](images/listed-price-influence-change.png)
+
+### 2. Expanded gender response options
+
+The original demographics question only offered Male and Female as answer choices, which excludes participants who do not identify with either option and can lead to inaccurate data or survey abandonment. I added Non-binary and Prefer not to say as additional choices, making the question more inclusive and more likely to produce accurate responses from the full range of participants.
+
+![Expanded gender/sex answer choices](Gender-Change.png)
+
+### 3. State of residence question
+
+The demographics block had no question capturing geographic location, which limits the ability to analyze results by region. I added a text entry question asking participants to report their state of residence, placed alongside the existing ethnicity question, so location can now be included as a variable in analysis.
+
+![New state of residence question in Demographics](Location.png)
+
+## Appendix
+
+GitHub Repository: \[Insert clickable link here\]
+
+GitHub Pages: \[Insert clickable link here\]
